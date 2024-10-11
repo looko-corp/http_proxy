@@ -9,9 +9,30 @@ Proxy-Host: https://jnv43hiecbl5c5bdsex5ncgbby0lmdcp.lambda-url.ap-northeast-2.o
 ###
 
 
+###
+POST http://15.164.138.101:8080/api/v1/health
+Content-Type: application/json
+Proxy-Host: https://jnv43hiecbl5c5bdsex5ncgbby0lmdcp.lambda-url.ap-northeast-2.on.aws
+
+{
+  "status": "UP"
+}
+###
+
+
 
 ###
 POST https://n2cz63w5ufgenhd26q3anzpzau0bubpm.lambda-url.ap-northeast-2.on.aws/foo/bar
+Content-Type: application/json
+Proxy-Host: https://jnv43hiecbl5c5bdsex5ncgbby0lmdcp.lambda-url.ap-northeast-2.on.aws
+
+{
+  "status": "UP"
+}
+###
+
+### 
+POST https://jnv43hiecbl5c5bdsex5ncgbby0lmdcp.lambda-url.ap-northeast-2.on.aws/foo/bar
 Content-Type: application/json
 Proxy-Host: https://jnv43hiecbl5c5bdsex5ncgbby0lmdcp.lambda-url.ap-northeast-2.on.aws
 
