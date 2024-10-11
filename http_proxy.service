@@ -5,8 +5,8 @@ Description=HTTP Proxy
 Type=simple
 Restart=on-failure
 RestartSec=1
-User=root
-WorkingDirectory=/home/http_proxy
+User=ec-user
+WorkingDirectory=/home
 ExecStart=/home/http_proxy
 
 [Install]
