@@ -1,6 +1,7 @@
 package main
 
 import (
+	"compress/gzip"
 	"fmt"
 	"io"
 	"net/http"
@@ -53,6 +54,15 @@ func handleProxy(responseWriter http.ResponseWriter, request *http.Request) {
 		for _, value := range values {
 			responseWriter.Header().Add(key, value)
 		}
+	}
+	var reader io.Reader = response.Body
+	if response.Header.Get("Content-Encoding") == "gzip" {
+		reader, err = gzip.NewReader(response.Body)
+		if err != nil {
+			http.Error(responseWriter, "Server Error", http.StatusInternalServerError)
+			return
+		}
+		defer reader.(*gzip.Reader).Close()
 	}
 
 	_, err = io.Copy(responseWriter, response.Body)
