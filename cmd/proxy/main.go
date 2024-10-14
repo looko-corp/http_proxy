@@ -1,7 +1,6 @@
 package main
 
 import (
-	"compress/gzip"
 	"fmt"
 	"io"
 	"net/http"
@@ -9,6 +8,11 @@ import (
 )
 
 func handleProxy(responseWriter http.ResponseWriter, request *http.Request) {
+	// 0. before 로깅
+	fmt.Println("Request URL", request.Method, request.URL.String())
+	fmt.Printf("Request Header: %+v\n", request.Header)
+	fmt.Printf("Request Body: %+v\n", request.Body)
+
 	// 1. 프록시로 호출할 최종 목적지 Host 획득
 	proxyHost := request.Header.Get("Proxy-Host")
 	request.Header.Del("Proxy-Host")
@@ -40,7 +44,9 @@ func handleProxy(responseWriter http.ResponseWriter, request *http.Request) {
 
 	// 3. 최종 목적지 서버로 요청 전달
 	client := &http.Client{}
+	fmt.Printf("@@ before %s\n", request.URL.String())
 	response, err := client.Do(proxyRequest)
+	fmt.Printf("@@ after %s\n", request.URL.String())
 	if err != nil {
 		http.Error(responseWriter, "Server Error", http.StatusInternalServerError)
 		return
